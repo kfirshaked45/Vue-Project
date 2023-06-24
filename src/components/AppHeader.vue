@@ -1,11 +1,13 @@
 <template>
   <header class="app-header">
-    <h1>Digital Wallet</h1>
-    <p v-if="currentUser">
-      Welcome {{ currentUser.name }}!, Your balance is {{ currentUser.balance }}
-    </p>
-    <p>Current bitcoin rate is: {{ rate }}</p>
-    <nav>
+    <div class="header-text">
+      <h1>Digital Wallet</h1>
+      <p v-if="currentUser">
+        Welcome {{ currentUser.name }}!, Your balance is {{ currentUser.balance }}, Current rate is:
+        {{ rate }}
+      </p>
+    </div>
+    <nav class="header-nav">
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/contact">Contacts</RouterLink>
     </nav>
@@ -33,4 +35,9 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="css">
+.header-nav {
+  display: flex;
+  justify-content: space-evenly;
+}
+</style>

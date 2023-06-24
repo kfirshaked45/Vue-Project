@@ -1,13 +1,17 @@
 <template>
-  <div>
-    <h2>Contact Details</h2>
-    <div>
-      <img :src="getAvatarURL(contact.email)" alt="Contact Avatar" />
-      <strong>Name:</strong> {{ contact.name }}
+  <div class="section">
+    <div class="top-section">
+      <h2>Contact Details</h2>
+      <button @click="goBack" class="back-btn">Back</button>
     </div>
-    <div><strong>Email:</strong> {{ contact.email }}</div>
+    <div>
+      <img :src="getAvatarURL(contact.email)" alt="Contact Avatar" class="avatar" />
+      <div>
+        <p>Name: {{ contact.name }}</p>
+        <p>Email: {{ contact.email }}</p>
+      </div>
+    </div>
     <!-- Add more details here -->
-    <button @click="goBack">Go Back</button>
   </div>
 </template>
 
@@ -58,5 +62,23 @@ export default {
 <style scoped>
 h2 {
   margin-bottom: 1rem;
+}
+.avatar {
+  height: 100px;
+}
+.back-btn {
+  border: none;
+  cursor: pointer;
+  height: 30px;
+  border-radius: 3px;
+  width: 50px;
+  background-color: inherit;
+  color: inherit;
+  box-shadow: inset 0px 0px 0px 1px gray;
+}
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  width: 400px;
 }
 </style>

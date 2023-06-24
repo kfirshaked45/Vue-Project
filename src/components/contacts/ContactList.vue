@@ -3,10 +3,10 @@
     <h2>Contact List</h2>
     <ul>
       <li v-for="contact in contacts" :key="contact._id">
-        <router-link :to="'/contact/' + contact._id">
+        <router-link :to="'/contact/' + contact._id" class="link">
           <strong>{{ contact.name }}</strong> - {{ contact.email }}
         </router-link>
-        <button @click="deleteContact(contact._id)">Delete</button>
+        <button @click="deleteContact(contact._id)" class="delete-btn">Delete</button>
       </li>
     </ul>
   </div>
@@ -50,5 +50,14 @@ ul {
 
 li {
   margin-bottom: 0.5rem;
+}
+.link {
+  margin-right: 10px;
+}
+.delete-btn {
+  border: none;
+  border-radius: 5px;
+  height: 30px;
+  cursor: pointer;
 }
 </style>
