@@ -27,16 +27,9 @@ export default createStore({
           try {
             await contactService.deleteContact(contactId)
             commit('setContacts', [])
+            await commit('setContacts', await contactService.getContacts())
           } catch (error) {
             console.error('Error deleting contact:', error)
-          }
-        },
-        async saveContact({ commit }, contact) {
-          try {
-            await contactService.saveContact(contact)
-            commit('setContacts', [])
-          } catch (error) {
-            console.error('Error saving contact:', error)
           }
         }
       },
@@ -59,13 +52,17 @@ export default createStore({
         },
         setLoggedIn(state, isLoggedIn) {
           state.isLoggedIn = isLoggedIn
+        },
+        setTransactions(state, transactions) {
+          state.user.transactions = transactions
         }
       },
       actions: {
         async login({ commit }, username) {
           try {
             await userService.login(username)
-            commit('setUser', { name: username })
+            const user = userService.getUser()
+            commit('setUser', user)
             commit('setLoggedIn', true)
           } catch (error) {
             console.error('Error logging in:', error)
@@ -74,7 +71,8 @@ export default createStore({
         async signup({ commit }, username) {
           try {
             await userService.signup(username)
-            commit('setUser', { name: username })
+            const user = userService.getUser()
+            commit('setUser', user)
             commit('setLoggedIn', true)
           } catch (error) {
             console.error('Error signing up:', error)
@@ -100,11 +98,29 @@ export default createStore({
           } catch (error) {
             console.error('Error updating user profile:', error)
           }
+        },
+        async transferFunds({ commit }, { to, amount }) {
+          try {
+            await userService.transferFunds(to, amount)
+            const transactions = userService.getTransactions()
+            commit('setTransactions', transactions)
+          } catch (error) {
+            console.error('Error transferring funds:', error)
+          }
+        },
+        async getTransactions({ commit }) {
+          try {
+            const transactions = userService.getTransactions()
+            commit('setTransactions', transactions)
+          } catch (error) {
+            console.error('Error getting transactions:', error)
+          }
         }
       },
       getters: {
         user: (state) => state.user,
-        isLoggedIn: (state) => state.isLoggedIn
+        isLoggedIn: (state) => state.isLoggedIn,
+        getTransactions: (state) => state.user.transactions
       }
     }
   }

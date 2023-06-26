@@ -8,52 +8,46 @@ export const userService = {
   updateUserProfile
 }
 
-let user = null
+let users = []
 
 function signup(name) {
+  // Check if the user already exists
+  const existingUser = users.find((user) => user.name === name)
+  if (existingUser) {
+    throw new Error('User already exists')
+  }
+
   // Create a new user with the given name and starting balance of 100
-  user = {
+  const newUser = {
     name,
     balance: 100,
     transactions: []
   }
-  saveUser()
+
+  // Add the new user to the users array
+  users.push(newUser)
+  saveUsers()
 }
 
 function login(name) {
-  // Check if the user exists in local storage
-  const savedUser = localStorage.getItem('user')
-  if (savedUser) {
-    const parsedUser = JSON.parse(savedUser)
-    if (parsedUser.name === name) {
-      // User exists, retrieve the user details from local storage
-      user = parsedUser
-    } else {
-      // Different user, create a new user with starting balance of 100
-      user = {
-        name,
-        balance: 100,
-        transactions: []
-      }
-      saveUser()
-    }
-  } else {
-    // User does not exist, create a new user with starting balance of 100
-    user = {
-      name,
-      balance: 100,
-      transactions: []
-    }
-    saveUser()
+  // Check if the user exists in the users array
+  const user = users.find((user) => user.name === name)
+  if (!user) {
+    throw new Error('User does not exist')
   }
+
+  // Set the user as the active user
+  setCurrentUser(user)
 }
 
 function getUser() {
-  return user
+  return getCurrentUser()
 }
 
 function transferFunds(to, amount) {
-  if (user.balance < amount) {
+  const currentUser = getCurrentUser()
+
+  if (currentUser.balance < amount) {
     throw new Error('Insufficient balance')
   }
 
@@ -63,28 +57,39 @@ function transferFunds(to, amount) {
     timestamp: Date.now()
   }
 
-  user.balance -= amount
-  user.transactions.push(transaction)
-  saveUser()
+  currentUser.balance -= amount
+  currentUser.transactions.push(transaction)
+  saveUsers()
 }
 
 function getTransactions() {
-  return user.transactions
+  const currentUser = getCurrentUser()
+  return currentUser.transactions
 }
 
-function saveUser() {
-  localStorage.setItem('user', JSON.stringify(user))
+function saveUsers() {
+  localStorage.setItem('users', JSON.stringify(users))
+}
+
+function setCurrentUser(user) {
+  localStorage.setItem('currentUser', JSON.stringify(user))
+}
+
+function getCurrentUser() {
+  const currentUser = localStorage.getItem('currentUser')
+  return currentUser ? JSON.parse(currentUser) : null
 }
 
 function logout() {
-  user = null
-  localStorage.removeItem('user')
+  localStorage.removeItem('currentUser')
 }
 
 function updateUserProfile(updatedProfile) {
-  if (user) {
+  const currentUser = getCurrentUser()
+  if (currentUser) {
     // Update the user profile
-    user.name = updatedProfile.name
-    saveUser()
+    currentUser.name = updatedProfile.name
+    saveUsers()
+    setCurrentUser(currentUser)
   }
 }

@@ -1,15 +1,30 @@
 <template>
   <div>
-    <h2>Contact List</h2>
-    <ul class="list-container">
-      <li v-for="contact in contacts" :key="contact._id">
-        <router-link :to="'/contact/' + contact._id" class="link">
-          <strong>{{ contact.name }}</strong> - {{ contact.email }}
-        </router-link>
-        <router-link :to="'/contact/edit/' + contact._id" class="edit-btn">Edit</router-link>
-        <button @click="deleteContact(contact._id)" class="delete-btn">Delete</button>
-      </li>
-    </ul>
+    <h2>Contacts</h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="contact in contacts" :key="contact._id">
+          <td>{{ contact.name }}</td>
+          <td>{{ contact.email }}</td>
+          <td>
+            <router-link :to="`/contact/${contact._id}`" class="btn btn-primary mr-2"
+              >View</router-link
+            >
+            <router-link :to="`/contact/edit/${contact._id}`" class="btn btn-info mr-2"
+              >Edit</router-link
+            >
+            <button @click="deleteContact(contact._id)" class="btn btn-danger">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -35,31 +50,5 @@ export default {
 <style scoped>
 h2 {
   margin-bottom: 1rem;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  margin-bottom: 0.5rem;
-}
-.link {
-  margin-right: 10px;
-}
-.delete-btn {
-  border: none;
-  border-radius: 5px;
-  height: 30px;
-  cursor: pointer;
-  margin-inline-end: 10px;
-}
-.edit-btn {
-  color: black;
-}
-.list-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
 }
 </style>

@@ -52,24 +52,22 @@ export default {
   },
   methods: {
     ...mapActions('user', ['login', 'signup', 'logout']),
-    handleFormSubmit() {
+    async handleFormSubmit() {
       if (this.isLoggedIn) {
         // Handle saving the user profile data
         this.saveProfile()
       } else {
         // Handle login or signup based on the form input
         if (this.isSigningUp) {
-          this.signup()
+          await this.signup(this.user.name)
+          // After signing up, automatically log in the user
+          await this.login(this.user.name)
         } else {
-          this.login()
+          await this.login(this.user.name)
         }
       }
     },
-    saveProfile() {
-      // Handle saving the user profile data
-      // Dispatch an action from the user module to update the profile
-      this.$store.dispatch('user/updateProfile', this.user)
-    },
+
     toggleSignup() {
       this.isSigningUp = !this.isSigningUp
       // Reset form fields when toggling between sign up and login
@@ -77,6 +75,14 @@ export default {
       this.user.gender = ''
       this.user.reminderTime = ''
       this.user.favColor = ''
+    },
+
+    saveProfile() {
+      // Handle saving the user profile data
+      // You can implement the logic to save the profile details
+      // For example, you can call an API or dispatch an action to update the user's profile in the store
+      // You can access the updated profile data in `this.user`
+      console.log('Saving profile:', this.user)
     }
   }
 }

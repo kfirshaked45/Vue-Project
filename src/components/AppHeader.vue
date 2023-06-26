@@ -1,8 +1,8 @@
 <template>
   <header class="app-header">
     <div class="header-text">
-      <h1>Digital Wallet</h1>
-      <p v-if="currentUser">
+      <p>Digital Wallet</p>
+      <p v-if="isLoggedIn">
         Welcome {{ currentUser.name }}! Your balance is {{ currentUser.balance }}. Current rate is:
         {{ rate }}
       </p>
@@ -10,7 +10,7 @@
     <nav class="header-nav">
       <router-link to="/">Home</router-link>
       <router-link to="/contact">Contacts</router-link>
-      <router-link to="/stats">Stats</router-link>
+      <!-- <router-link to="/stats">Stats</router-link> -->
       <router-link to="/chatpop">Chatpop</router-link>
       <router-link to="/user">User</router-link>
     </nav>
@@ -18,16 +18,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import { bitcoinService } from '../services/bitcoinService'
+import { userService } from '../services/userService'
 
 export default {
-  computed: {
-    ...mapGetters('user', ['user']),
-    currentUser() {
-      return this.user
-    }
-  },
   data() {
     return {
       rate: null
@@ -39,18 +33,44 @@ export default {
     } catch (error) {
       console.error('Error fetching rate:', error)
     }
+  },
+  computed: {
+    currentUser() {
+      return userService.getUser()
+    },
+    isLoggedIn() {
+      return this.$store.getters['user/isLoggedIn']
+    }
   }
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
+p {
+  margin: 0;
+}
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header-text {
+  text-align: center;
+  align-self: center;
+}
 .header-nav {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
 }
 .header-nav a {
-  border-bottom: 1px solid rgb(196, 194, 194);
   padding: 20px;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 1px solid #ffffff;
+}
+.header-nav a:hover {
+  border-bottom: 1px solid #ccc;
 }
 </style>

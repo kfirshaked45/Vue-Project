@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     goBack() {
-      this.$router.push('/contacts')
+      this.$router.push('/contact')
     },
     saveContact() {
       // Call the contactService to save the contact

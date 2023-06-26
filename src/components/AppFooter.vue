@@ -1,14 +1,16 @@
 <template>
-    <footer class="app-footer">
-        <p>Coffeerights 2023</p>
-    </footer>
+  <footer class="app-footer">
+    <p>Digital Wallets Inc. 2023</p>
+  </footer>
 </template>
 
 <script>
-export default {
-}
+export default {}
 </script>
 
-<style lang="scss">
-
+<style lang="css" scoped>
+.app-footer {
+  position: relative;
+  bottom: 0;
+}
 </style>

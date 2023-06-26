@@ -11,18 +11,33 @@
         <p>Email: {{ contact.email }}</p>
       </div>
     </div>
-    <!-- Add more details here -->
+
+    <!-- Add TransferFunds component -->
+    <TransferFunds v-if="isLoggedIn" :contact="contact" />
+
+    <!-- Conditionally render TransactionList component -->
+    <TransactionList v-if="isLoggedIn" :contactId="contact._id" />
   </div>
 </template>
 
 <script>
 import { contactService } from '../../services/contactService'
+import TransferFunds from '../transfers/TransferFunds.vue'
+import TransactionList from '../transfers/TransactionList.vue'
+import { mapGetters } from 'vuex'
 
 export default {
+  components: {
+    TransferFunds,
+    TransactionList
+  },
   data() {
     return {
       contact: null
     }
+  },
+  computed: {
+    ...mapGetters('user', ['isLoggedIn'])
   },
   created() {
     const contactId = this.$route.params.id
@@ -44,8 +59,6 @@ export default {
       return `https://robohash.org/${hash}.png`
     },
     generateHash(email) {
-      // Implement your own hash generation logic here, e.g., using a hashing library
-      // For simplicity, we'll use a basic hash function that converts the email to a numerical hash
       let hash = 0
       for (let i = 0; i < email.length; i++) {
         hash = email.charCodeAt(i) + ((hash << 5) - hash)
