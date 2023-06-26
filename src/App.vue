@@ -13,12 +13,15 @@ export default {
   <AppHeader />
   <div class="main-content">
     <RouterView />
-    <AppFooter />
   </div>
+  <AppFooter />
 </template>
 
 <style>
 /* .main-page {
   display: flex;
 } */
+.main-content {
+  margin-block-start: 50px;
+}
 </style>

@@ -1,7 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ContactIndex from '../views/ContactIndex.vue'
+import Stats from '../views/Stats.vue'
 import ContactDetails from '../components/contacts/ContactDetails.vue'
+import ContactEdit from '../components/contacts/ContactEdit.vue'
+import PopChatView from '../views/PopChatView.vue'
 import HomeView from '../views/HomeView.vue'
+import UserProfile from '../views/UserProfile.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,12 +27,24 @@ const router = createRouter({
       component: ContactDetails
     },
     {
-      // path: '/about',
-      // name: 'about',
-      // // route level code-splitting
-      // // this generates a separate chunk (About.[hash].js) for this route
-      // // which is lazy-loaded when the route is visited.
-      // component: () => import('../views/AboutView.vue')
+      path: '/stats',
+      name: 'Stats',
+      component: Stats
+    },
+    {
+      path: '/chatpop',
+      name: 'chatpop',
+      component: PopChatView
+    },
+    {
+      path: '/user',
+      name: 'user',
+      component: UserProfile
+    },
+    {
+      path: '/contact/edit/:_id?',
+      name: 'ContactEdit',
+      component: ContactEdit
     }
   ]
 })

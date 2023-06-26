@@ -1,11 +1,12 @@
 <template>
   <div>
     <h2>Contact List</h2>
-    <ul>
+    <ul class="list-container">
       <li v-for="contact in contacts" :key="contact._id">
         <router-link :to="'/contact/' + contact._id" class="link">
           <strong>{{ contact.name }}</strong> - {{ contact.email }}
         </router-link>
+        <router-link :to="'/contact/edit/' + contact._id" class="edit-btn">Edit</router-link>
         <button @click="deleteContact(contact._id)" class="delete-btn">Delete</button>
       </li>
     </ul>
@@ -13,27 +14,20 @@
 </template>
 
 <script>
-import { contactService } from '../../services/contactService'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  props: {
-    contacts: {
-      type: Array,
-      required: true
-    }
+  computed: {
+    ...mapState('contact', ['contacts'])
   },
   methods: {
-    deleteContact(contactId) {
-      contactService
-        .deleteContact(contactId)
-        .then(() => {
-          // Emit the contactDeleted event with the contactId
-          this.$emit('contactDeleted', contactId)
-        })
-        .catch((error) => {
-          console.error('Error deleting contact:', error)
-        })
+    ...mapActions('contact', ['deleteContact']),
+    async loadContacts() {
+      await this.$store.dispatch('contact/loadContacts')
     }
+  },
+  created() {
+    this.loadContacts()
   }
 }
 </script>
@@ -59,5 +53,13 @@ li {
   border-radius: 5px;
   height: 30px;
   cursor: pointer;
+  margin-inline-end: 10px;
+}
+.edit-btn {
+  color: black;
+}
+.list-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 </style>
