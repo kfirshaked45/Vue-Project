@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <ContactList :contacts="contacts" @contactDeleted="handleContactDeleted" />
-    <p>HEREEEEEEEEE</p>
-  </div>
+  <ContactList :contacts="contacts" @contactDeleted="handleContactDeleted" />
 </template>
 
 <script>

@@ -1,10 +1,12 @@
 <script>
 import AppHeader from './components/AppHeader.vue'
 import AppFooter from './components/AppFooter.vue'
+import PopChatView from './views/PopChatView.vue'
 export default {
   components: {
     AppHeader,
-    AppFooter
+    AppFooter,
+    PopChatView
   }
 }
 </script>
@@ -13,7 +15,9 @@ export default {
   <AppHeader />
   <div class="main-content">
     <RouterView />
+    <PopChatView />
   </div>
+
   <AppFooter />
 </template>
 

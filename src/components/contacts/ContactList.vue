@@ -13,7 +13,7 @@
         <tr v-for="contact in contacts" :key="contact._id">
           <td>{{ contact.name }}</td>
           <td>{{ contact.email }}</td>
-          <td>
+          <td class="routers-btn">
             <router-link :to="`/contact/${contact._id}`" class="btn btn-primary mr-2"
               >View</router-link
             >
@@ -50,5 +50,9 @@ export default {
 <style scoped>
 h2 {
   margin-bottom: 1rem;
+}
+.routers-btn {
+  display: flex;
+  justify-content: space-evenly;
 }
 </style>

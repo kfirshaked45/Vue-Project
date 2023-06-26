@@ -1,14 +1,21 @@
 <template>
   <div class="section">
-    <div class="top-section">
-      <h2>Contact Details</h2>
-      <button @click="goBack" class="back-btn">Back</button>
-    </div>
-    <div>
-      <img :src="getAvatarURL(contact.email)" alt="Contact Avatar" class="avatar" />
+    <div class="top-section d-flex justify-content-between align-items-center mb-4">
+      <h2 class="font-weight-bold">Contact Details</h2>
       <div>
-        <p>Name: {{ contact.name }}</p>
-        <p>Email: {{ contact.email }}</p>
+        <button @click="saveContact" class="btn btn-primary">Save</button>
+        <button @click="goBack" class="btn btn-outline-secondary">Back</button>
+      </div>
+    </div>
+    <div class="d-flex align-items-center mb-4">
+      <img
+        :src="getAvatarURL(contact.email)"
+        alt="Contact Avatar"
+        class="avatar rounded-circle mr-3"
+      />
+      <div>
+        <p class="mb-1"><strong>Name:</strong> {{ contact.name }}</p>
+        <p class="mb-0"><strong>Email:</strong> {{ contact.email }}</p>
       </div>
     </div>
 
@@ -33,7 +40,11 @@ export default {
   },
   data() {
     return {
-      contact: null
+      contact: null,
+      editedContact: {
+        name: '',
+        email: ''
+      }
     }
   },
   computed: {
@@ -49,10 +60,23 @@ export default {
         .getContactById(contactId)
         .then((contact) => {
           this.contact = contact
+          // Clone the contact object to keep the original data
+          this.editedContact = { ...contact }
         })
         .catch((error) => {
           console.error('Error fetching contact:', error)
         })
+    },
+    async saveContact() {
+      try {
+        // Call the saveContact action and pass the editedContact object
+        await this.$store.dispatch('contact/saveContact', this.editedContact)
+        // Handle successful save, e.g., show a success message
+        this.goBack()
+      } catch (error) {
+        console.error('Error saving contact:', error)
+        // Handle error, e.g., show an error message
+      }
     },
     getAvatarURL(email) {
       const hash = this.generateHash(email)
@@ -76,22 +100,32 @@ export default {
 h2 {
   margin-bottom: 1rem;
 }
+
 .avatar {
   height: 100px;
 }
-.back-btn {
-  border: none;
-  cursor: pointer;
-  height: 30px;
-  border-radius: 3px;
-  width: 50px;
-  background-color: inherit;
-  color: inherit;
-  box-shadow: inset 0px 0px 0px 1px gray;
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
 }
-.top-section {
-  display: flex;
-  justify-content: space-between;
-  width: 400px;
+
+.btn-outline-secondary {
+  border-color: #6c757d;
+  color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #6c757d;
+  color: white;
+}
+
+.rounded-circle {
+  width: 100px;
+  height: 100px;
+}
+
+.mb-0 {
+  margin-bottom: 0;
 }
 </style>

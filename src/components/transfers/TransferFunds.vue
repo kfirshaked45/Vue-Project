@@ -24,7 +24,8 @@ export default {
   methods: {
     ...mapActions('user', ['transferFunds']),
     transfer() {
-      this.transferFunds(this.recipient, this.amount)
+      console.log(this.user, 'USERRRR')
+      this.transferFunds({ to: this.recipient, amount: this.amount })
       this.recipient = ''
       this.amount = null
     }

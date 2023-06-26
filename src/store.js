@@ -31,6 +31,22 @@ export default createStore({
           } catch (error) {
             console.error('Error deleting contact:', error)
           }
+        },
+        async saveContact({ commit }, contact) {
+          try {
+            // Call the contactService to save the contact
+            const savedContact = await contactService.saveContact(contact)
+
+            // Update the contacts list in the store
+            commit('setContacts', [])
+            const contacts = await contactService.getContacts()
+            commit('setContacts', contacts)
+
+            return savedContact
+          } catch (error) {
+            console.error('Error saving contact:', error)
+            throw error
+          }
         }
       },
       getters: {

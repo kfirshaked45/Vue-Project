@@ -1,19 +1,23 @@
 <template>
-  <div>
-    <h1>Edit Contact</h1>
-    <div v-if="contact">
-      <p>Name: {{ contact.name }}</p>
-      <p>Email: {{ contact.email }}</p>
-      <!-- Add input fields for editing contact details -->
-      <input v-model="editedContact.name" placeholder="Name" />
-      <input v-model="editedContact.email" placeholder="Email" />
+  <div class="edit-contact">
+    <h1 class="mb-4">Edit Contact</h1>
+    <div v-if="contact" class="contact-details">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input id="name" v-model="editedContact.name" class="form-control" placeholder="Name" />
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" v-model="editedContact.email" class="form-control" placeholder="Email" />
+      </div>
 
-      <button @click="goBack">Back</button>
-      <button v-if="isNewContact" @click="saveContact">Save</button>
-      <button v-if="isNewContact" @click="cancelEdit">Cancel</button>
-      <button v-else @click="deleteContact">Delete</button>
+      <div class="buttons">
+        <button @click="goBack" class="btn btn-secondary mr-2">Back</button>
+        <button @click="saveContact" class="btn btn-primary mr-2">Save</button>
+        <button @click="deleteContact" class="btn btn-danger">Delete</button>
+      </div>
     </div>
-    <div v-else>Loading...</div>
+    <div v-else class="loading">Loading...</div>
   </div>
 </template>
 
@@ -92,3 +96,29 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.edit-contact {
+  max-width: 400px;
+  margin: auto;
+  padding: 2rem;
+}
+
+.edit-contact h1 {
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.loading {
+  margin-top: 2rem;
+  text-align: center;
+}
+</style>

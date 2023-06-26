@@ -28,8 +28,25 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 .home-text {
   font-size: 16px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin-bottom: 5px;
 }
 </style>

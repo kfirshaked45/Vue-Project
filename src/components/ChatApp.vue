@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="openPopup" class="chat-icon">Chat</button>
+    <button @click="openPopup" class="btn btn-primary chat-icon">Chat</button>
     <div v-if="showPopup" class="popup">
       <div class="popup-header">
         <slot name="header"></slot>
@@ -16,15 +16,16 @@
           <input
             v-model="inputText"
             @keydown.enter="sendMessage"
+            class="form-control"
             placeholder="Type your message..."
           />
-          <button @click="sendMessage">Send</button>
+          <button @click="sendMessage" class="btn btn-primary">Send</button>
         </div>
       </div>
       <div class="popup-footer">
         <slot name="footer"></slot>
       </div>
-      <button @click="closePopup" class="close-btn">Close</button>
+      <button @click="closePopup" class="btn btn-secondary close-btn">Close</button>
     </div>
   </div>
 </template>

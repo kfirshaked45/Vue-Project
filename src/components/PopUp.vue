@@ -8,9 +8,7 @@
       <div class="popup-content">
         <slot></slot>
       </div>
-      <div class="popup-footer">
-        <slot name="footer"></slot>
-      </div>
+
       <button @click="closePopup" class="close-btn">Close</button>
     </div>
   </div>
@@ -54,6 +52,9 @@ export default {
   background-color: white;
   border: 1px solid #ccc;
   padding: 20px;
+  width: 300px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
 }
 
 .popup-header {
@@ -68,6 +69,17 @@ export default {
 
 .close-btn {
   margin-top: 20px;
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  background-color: #555;
 }
 
 .chat-icon {
@@ -75,9 +87,16 @@ export default {
   bottom: 20px;
   right: 20px;
   padding: 10px;
+  font-size: 16px;
   background-color: #333;
   color: white;
   border: none;
+  border-radius: 3px;
   cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.chat-icon:hover {
+  background-color: #555;
 }
 </style>

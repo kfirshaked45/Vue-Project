@@ -1,25 +1,38 @@
 <template>
-  <form @submit.prevent="handleFormSubmit">
-    <div v-if="!isLoggedIn && !isSigningUp">
-      <h2>Log In</h2>
-      <input type="text" v-model="user.name" placeholder="Name" required />
-      <button type="submit">Log In</button>
-      <p>Don't have an account? <a @click="toggleSignup">Sign up</a></p>
+  <form @submit.prevent="handleFormSubmit" class="container">
+    <div v-if="!isLoggedIn && !isSigningUp" class="text-center">
+      <h2 class="mb-4">Log In</h2>
+      <div class="form-group">
+        <input type="text" v-model="user.name" placeholder="Name" required class="form-control" />
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg">Log In</button>
+      <p class="mt-3">Don't have an account? <a @click="toggleSignup">Sign up</a></p>
     </div>
-    <div v-else-if="!isLoggedIn && isSigningUp">
-      <h2>Sign Up</h2>
-      <input type="text" v-model="user.name" placeholder="Name" required />
-      <button type="submit">Sign Up</button>
-      <p>Already have an account? <a @click="toggleSignup">Log in</a></p>
+    <div v-else-if="!isLoggedIn && isSigningUp" class="text-center">
+      <h2 class="mb-4">Sign Up</h2>
+      <div class="form-group">
+        <input type="text" v-model="user.name" placeholder="Name" required class="form-control" />
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+      <p class="mt-3">Already have an account? <a @click="toggleSignup">Log in</a></p>
     </div>
-    <div v-else>
-      <h2>Welcome, {{ user.name }}</h2>
-      <p>Profile Details:</p>
-      <gender-picker v-model="user.gender"></gender-picker>
-      <time-picker v-model="user.reminderTime"></time-picker>
-      <color-picker v-model="user.favColor"></color-picker>
-      <button type="submit">Save</button>
-      <p>Not {{ user.name }}? <a @click="logout">Log out</a></p>
+    <div v-else class="text-center">
+      <h2 class="mb-4">Welcome, {{ user.name }}</h2>
+      <p class="lead">Profile Details:</p>
+      <div class="form-group">
+        <label for="gender" class="form-label">Gender:</label>
+        <gender-picker v-model="user.gender" id="gender"></gender-picker>
+      </div>
+      <div class="form-group">
+        <label for="reminder-time" class="form-label">Reminder Time:</label>
+        <time-picker v-model="user.reminderTime" id="reminder-time"></time-picker>
+      </div>
+      <div class="form-group">
+        <label for="fav-color" class="form-label">Favorite Color:</label>
+        <color-picker v-model="user.favColor" id="fav-color"></color-picker>
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg">Save</button>
+      <p class="mt-3">Not {{ user.name }}? <a @click="logout">Log out</a></p>
     </div>
   </form>
 </template>
@@ -87,3 +100,50 @@ export default {
   }
 }
 </script>
+
+<style>
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+.btn-lg {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.25rem;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.btn-primary:focus {
+  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+}
+
+.lead {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+
+.text-center {
+  text-align: center;
+}
+</style>
