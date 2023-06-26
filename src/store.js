@@ -88,21 +88,20 @@ export default createStore({
           } catch (error) {
             console.error('Error logging out:', error)
           }
+        },
+        async updateProfile({ commit }, userProfile) {
+          try {
+            // Perform the API call or database update to save the user profile data
+            // For example:
+            await userService.updateUserProfile(userProfile)
+
+            // Commit a mutation to update the user state in the store
+            commit('setUser', userProfile)
+          } catch (error) {
+            console.error('Error updating user profile:', error)
+          }
         }
       },
-      async updateProfile({ commit }, userProfile) {
-        try {
-          // Perform the API call or database update to save the user profile data
-          // For example:
-          await userService.updateUserProfile(userProfile)
-
-          // Commit a mutation to update the user state in the store
-          commit('setUser', userProfile)
-        } catch (error) {
-          console.error('Error updating user profile:', error)
-        }
-      }
-    },
       getters: {
         user: (state) => state.user,
         isLoggedIn: (state) => state.isLoggedIn

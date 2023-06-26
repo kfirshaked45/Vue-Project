@@ -4,7 +4,8 @@ export const userService = {
   getUser,
   transferFunds,
   getTransactions,
-  logout
+  logout,
+  updateUserProfile
 }
 
 let user = null
@@ -74,7 +75,16 @@ function getTransactions() {
 function saveUser() {
   localStorage.setItem('user', JSON.stringify(user))
 }
+
 function logout() {
   user = null
   localStorage.removeItem('user')
+}
+
+function updateUserProfile(updatedProfile) {
+  if (user) {
+    // Update the user profile
+    user.name = updatedProfile.name
+    saveUser()
+  }
 }
