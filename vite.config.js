@@ -1,17 +1,16 @@
 import { fileURLToPath, URL } from 'node:url'
+
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 
-// Get the base URL of your GitHub Pages deployment
-const baseUrl = '/Vue-Project/'
-
+// https://vitejs.dev/config/
 export default defineConfig({
-  base: baseUrl,
   plugins: [vue(), vueJsx()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  }
+  },
+  base: '/vue-project/'
 })
